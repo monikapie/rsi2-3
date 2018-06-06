@@ -1,41 +1,57 @@
 package rsirest2.demo;
 
-class Message {
-    private Long id;
+import org.springframework.hateoas.ResourceSupport;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+class Message extends ResourceSupport {
+    private Long messageID;
     private String content;
     private String author;
+    private List<Comment> comments = new ArrayList<>();
 
-    Message() {
-
-    }
+    Message() {}
 
     Message(Long id, String content, String author) {
-        this.id = id;
+        this.messageID = id;
         this.content = content;
         this.author = author;
+        add(linkTo(MessageResource.class).withRel("messages"));
+        add(linkTo(methodOn(MessageResource.class).read(id.intValue())).withRel("comments"));
+        add(linkTo(methodOn(MessageResource.class).findById(id)).withSelfRel());
     }
 
-    public Long getId() {
-        return id;
+    Message(Long id, String content, String author, List<Comment> comments) {
+        this.messageID = id;
+        this.content = content;
+        this.author = author;
+        this.comments = comments;
+        add(linkTo(MessageResource.class).withRel("messages"));
+        add(linkTo(methodOn(MessageResource.class).read(id.intValue())).withRel("comments"));
+        add(linkTo(methodOn(MessageResource.class).findById(id)).withSelfRel());
     }
 
-    public String getContent() {
+    Long getMessageId() {
+        return messageID;
+    }
+
+    String getContent() {
         return content;
     }
 
-    public String getAuthor() {
+    String getAuthor() {
         return author;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    void setMessageID(Long messageID) {
+        this.messageID = messageID;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
+    List<Comment> getComments() {
+        return comments;
     }
 }

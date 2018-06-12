@@ -1,4 +1,4 @@
-package rsirest2.demo;
+package rsirest4.demo;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;

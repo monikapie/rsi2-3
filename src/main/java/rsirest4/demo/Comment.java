@@ -1,4 +1,4 @@
-package rsirest2.demo;
+package rsirest4.demo;
 
 public class Comment {
     private String info;
